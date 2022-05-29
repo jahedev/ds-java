@@ -114,11 +114,9 @@ public class DoublyLinkedList<E> implements ListI<E>, Iterable<E> {
         }
 
         Node<E> p = head;
-        Node<E> previous = null;
 
         while (p != null) {
             if (((Comparable<E>) p.data).compareTo(obj) == 0) {
-                System.out.println("MATCHED! " + p.data + " " + obj);
                 E ret = p.data;
 
                 // if there is only a single element
@@ -138,12 +136,13 @@ public class DoublyLinkedList<E> implements ListI<E>, Iterable<E> {
                 }
 
                 // remove in the middle of list
+                Node<E> previous = p.prev;
                 p = p.next;
+                p.prev = previous;
                 previous.next = p;
                 currentSize--;
                 return ret;
             }
-            previous = p;
             p = p.next;
         }
 
@@ -182,6 +181,15 @@ public class DoublyLinkedList<E> implements ListI<E>, Iterable<E> {
         int i;
 
         for (p = head, i = 0; p != null; p = p.next, i++) {
+            System.out.printf("%d->%s\n", i, (p.data).toString());
+        }
+    }
+
+    public void printListReverse() {
+        Node<E> p;
+        int i;
+
+        for (p = tail, i = currentSize-1; p != null; p = p.prev, i--) {
             System.out.printf("%d->%s\n", i, (p.data).toString());
         }
     }

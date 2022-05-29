@@ -113,7 +113,6 @@ public class LinkedList<E> implements ListI<E>, Iterable<E> {
 
         while (p != null) {
             if (((Comparable<E>) p.data).compareTo(obj) == 0) {
-                System.out.println("MATCHED! " + p.data + " " + obj);
                 E ret = p.data;
 
                 // if there is only a single element
