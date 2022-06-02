@@ -221,5 +221,4 @@ public class DoublyLinkedList<E> implements ListI<E>, Iterable<E> {
             return ret;
         }
     }
-
 }
