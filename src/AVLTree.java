@@ -1,20 +1,22 @@
-public class Tree<E> implements TreeI<E> {
+public class AVLTree<E> implements TreeI<E> {
 
     class Node<E> implements NodeI<E> {
+
         E data;
         Node<E> left;
         Node<E> right;
+        Node<E> parent;
 
         public Node(E obj) {
             data = obj;
-            left = right = null;
+            left = right = parent = null;
         }
     }
 
     private Node<E> root;
     int currentSize;
 
-    public Tree() {
+    public AVLTree() {
         root = null;
         currentSize = 0;
     }
@@ -105,6 +107,34 @@ public class Tree<E> implements TreeI<E> {
     private E max(Node<E> node) {
         if (node.right == null) return node.data;
         else return min(node.right);
+    }
+
+    private Node<E> leftRotate(Node<E> node) {
+        Node<E> tmp = node.right;
+        node.right = tmp.left;
+        tmp.left = node;
+        return tmp;
+    }
+
+    private Node<E> rightLeftRotate(Node<E> grandparentNode) {
+        // right rotate on parent
+        grandparentNode.right = rightRotate(grandparentNode.right);
+        // left rotate on grandparent
+        return leftRotate(grandparentNode);
+    }
+
+    private Node<E> leftRightRotate(Node<E> grandparentNode) {
+        // left rotate on parent
+        grandparentNode.left = leftRotate(grandparentNode.left);
+        // right rotate on grandparent
+        return rightRotate(grandparentNode);
+    }
+
+    private Node<E> rightRotate(Node<E> node) {
+        Node<E> tmp = node.left;
+        node.left = tmp.right;
+        tmp.right = node;
+        return tmp;
     }
 
     public void traverse(TraversalOrder order) {
